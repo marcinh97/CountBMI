@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         return new String[]{massToParse, heightToParse};
     }
 
+
     private void countBmi() {
         double[] massAndHeight = new double[2];
         boolean hasErrors = false;
