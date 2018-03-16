@@ -32,7 +32,7 @@
     <string name="wrong_height_error_message">Height must be between 0.5–3m / 20–120 inch.</string>
     <string name="wrong_mass_height_error_message">Mass must be between 5–500 kg / 10–1000 lbs,
     height: 0.5-3m / 20-120 inch. </string>
-    <string name="unknown_error_message">Unknown error.</string>
+    <string name="unknown_error_message">Incorrect input.</string>
     <string name="bmi_results">Bmi results</string>
     <string name="successful_save_message">Saved successfully</string>
     <string name="saved_values_deleted">Deleted previously saved values</string>
