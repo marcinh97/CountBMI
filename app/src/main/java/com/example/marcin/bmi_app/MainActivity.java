@@ -73,11 +73,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (unitChanger.isChecked()) {
-                    massInput.setHint(R.string.pounds);
-                    heightInput.setHint(R.string.inches);
+                    setInputWhenSwitchPressed(getString(R.string.pounds), getString(R.string.inches));
                 } else {
-                    massInput.setHint(R.string.kilograms);
-                    heightInput.setHint(R.string.meters);
+                    setInputWhenSwitchPressed(getString(R.string.kilograms), getString(R.string.meters));
                 }
             }
         });
@@ -97,15 +95,13 @@ public class MainActivity extends AppCompatActivity {
                 saveMassHeightToRetrieveLater();
             }
         });
+    }
 
-       /* if (savedInstanceState != null){
-            if (savedInstanceState.containsKey(IS_POPUP_SHOWN)){
-                if (savedInstanceState.getBoolean(IS_POPUP_SHOWN)){
-                    makeLongToastWithMessage("hehe");
-                }
-            }
-        }*/
-
+    private void setInputWhenSwitchPressed(String massMessage, String heightMessage){
+        massInput.setText("");
+        heightInput.setText("");
+        massInput.setHint(massMessage);
+        heightInput.setHint(heightMessage);
     }
 
     private void saveMassHeightToRetrieveLater() {
@@ -130,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
             editor.putLong(MASS_KEY, Double.doubleToRawLongBits(mass));
             editor.putLong(HEIGHT_KEY, Double.doubleToRawLongBits(height));
+
             editor.putBoolean(SWITCH_STATUS, unitChanger.isChecked());
             makeLongToastWithMessage(getText(R.string.successful_save_message).toString());
             editor.apply();
