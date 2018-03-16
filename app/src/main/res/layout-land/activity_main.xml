@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/seigaiha_repeating"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/main_toolbar"
+        layout="@layout/app_bar" />
+
+    <Switch
+        android:id="@+id/change_units_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/actor"
+        android:showText="true"
+        android:text="@string/switch_description"
+        android:textAlignment="textEnd"
+        android:textOff="@string/kg"
+        android:textOn="@string/lbs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/count_bmi_button" />
+
+    <TextView
+        android:id="@+id/mass_text_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/actor"
+        android:gravity="center"
+        android:text="@string/mass"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/mass_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_toolbar" />
+
+    <EditText
+        android:id="@+id/height_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/meters"
+        android:inputType="numberDecimal"
+        android:textSize="14sp"
+        android:textColorHint="@color/hintColor"
+        app:layout_constraintBottom_toTopOf="@+id/count_bmi_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/height_text_view"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:id="@+id/height_text_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/actor"
+        android:gravity="center"
+        android:text="@string/height"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/height_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mass_edit_text" />
+
+    <EditText
+        android:id="@+id/mass_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/kilograms"
+        android:inputType="number"
+        android:textSize="14sp"
+        android:textColorHint="@color/hintColor"
+        app:layout_constraintBottom_toTopOf="@+id/height_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mass_text_view" />
+
+    <Button
+        android:id="@+id/count_bmi_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button"
+        android:fontFamily="@font/allerta"
+        android:text="@string/count_bmi"
+        app:layout_constraintBottom_toTopOf="@+id/change_units_switch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/height_edit_text" />
+
+    <TextView
+        android:id="@+id/copyrights_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/actor"
+        android:text="@string/copyright_names"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/change_units_switch"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/count_bmi_button"
+        app:layout_constraintVertical_bias="0.384" />
+
+</android.support.constraint.ConstraintLayout>

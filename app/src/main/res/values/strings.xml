@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Count BMI</string>
+    <string name="settings_name">Settings</string>
+    <string name="about_author">About author</string>
+    <string name="koala">Koala</string>
+    <string name="author">Author</string>
+    <string name="author_name">Marcin Horak</string>
+    <string name="author_image_description">Funny koala</string>
+    <string name="save_icon">Save icon</string>
+
+    <string name="mass">Mass</string>
+    <string name="height">Height</string>
+    <string name="count_bmi">Count BMI</string>
+    <string name="kg">kg</string>
+    <string name="lbs">lbs</string>
+    <string name="kilograms">kilograms</string>
+    <string name="meters">meters</string>
+    <string name="pounds">pounds</string>
+    <string name="inches">inches</string>
+
+    <string name="switch_description">Change units [kg/lbs]</string>
+    <string name="switch_description_long">Change units. KG means using metric system (kilograms, meters),
+        LBS - imperial units (pounds and feet). </string>
+    <string name="copyright_names">By Marcin Horak</string>
+    <string name="bmi_info_web_url">https://en.wikipedia.org/wiki/Body_mass_index</string>
+
+    <string name="feet_edit_text">Feet</string>
+    <string name="inches_edit_text">Inches</string>
+
+    <string name="empty_input_error_message">Neither field can be empty.</string>
+    <string name="wrong_mass_error_message">Mass must be between 5–500 kg / 10–1000 lbs.</string>
+    <string name="wrong_height_error_message">Height must be between 0.5–3m / 20–120 inch.</string>
+    <string name="wrong_mass_height_error_message">Mass must be between 5–500 kg / 10–1000 lbs,
+    height: 0.5-3m / 20-120 inch. </string>
+    <string name="unknown_error_message">Unknown error.</string>
+    <string name="bmi_results">Bmi results</string>
+    <string name="successful_save_message">Saved successfully</string>
+    <string name="saved_values_deleted">Deleted previously saved values</string>
+    <string name="back_button_content_description">Back button</string>
+
+
+</resources>
