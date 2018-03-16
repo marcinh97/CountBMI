@@ -164,6 +164,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private double[] parseMassHeight() throws IllegalArgumentException{
+        String[] valuesToParse = getInitialMassHeightInput();
+        double mass = Double.parseDouble(valuesToParse[0]);
+        double height = Double.parseDouble(valuesToParse[1]);
+        return new double[]{mass, height};
+    }
+
     private String[] getInitialMassHeightInput() throws IllegalArgumentException{
         String massToParse = massInput.getText().toString();
         String heightToParse = heightInput.getText().toString();
@@ -171,13 +178,6 @@ public class MainActivity extends AppCompatActivity {
             throw new Bmi.NoArgumentsException();
         }
         return new String[]{massToParse, heightToParse};
-    }
-
-    private double[] parseMassHeight() throws IllegalArgumentException{
-        String[] valuesToParse = getInitialMassHeightInput();
-        double mass = Double.parseDouble(valuesToParse[0]);
-        double height = Double.parseDouble(valuesToParse[1]);
-        return new double[]{mass, height};
     }
 
     private void countBmi() {
