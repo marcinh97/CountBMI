@@ -16,28 +16,42 @@ import java.util.Locale;
 
 public class BmiResultsActivity extends AppCompatActivity {
 
-    TextView bmiResults;
-    ImageButton backToPreviousActivity;
+    private TextView bmiResults;
+    private ImageButton backToPreviousActivity;
+    private ConstraintLayout layout;
+    private double result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bmi_results);
-        double result = 0;
+        result = 0;
 
         Intent intent = getIntent();
-        result = intent.getDoubleExtra(MainActivity.BMI_RESULT, result); // tu ostatnia zmiana, z 
+        result = intent.getDoubleExtra(MainActivity.BMI_RESULT, result);
 
+        initViews();
+        initListeners();
+        setLayoutDetails();
+    }
+
+    private void initViews(){
         bmiResults = findViewById(R.id.bmi_results_text_view);
-        bmiResults.setText(String.format(Locale.ENGLISH,"%.2f", result));
-
         backToPreviousActivity = findViewById(R.id.back_to_prev_activity_button);
+        layout = findViewById(R.id.activity_bmi_results_id);
+    }
+
+    private void initListeners(){
         backToPreviousActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        ConstraintLayout layout = findViewById(R.id.activity_bmi_results_id);
+    }
+
+    private void setLayoutDetails(){
+        bmiResults.setText(String.format(Locale.ENGLISH,"%.2f", result));
         int backgroundId = new BmiBackgroundWrapper(result).getBackgroundDependingOnBmi();
         layout.setBackground(ContextCompat.getDrawable(this, backgroundId));
     }
