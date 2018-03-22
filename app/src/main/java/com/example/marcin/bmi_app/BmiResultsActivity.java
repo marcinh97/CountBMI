@@ -16,6 +16,7 @@ import java.util.Locale;
 
 public class BmiResultsActivity extends AppCompatActivity {
 
+    public static final String BMI_RESULTS_FORMAT = "%.2f";
     private TextView bmiResults;
     private ImageButton backToPreviousActivity;
     private ConstraintLayout layout;
@@ -51,7 +52,7 @@ public class BmiResultsActivity extends AppCompatActivity {
     }
 
     private void setLayoutDetails(){
-        bmiResults.setText(String.format(Locale.ENGLISH,"%.2f", result));
+        bmiResults.setText(String.format(Locale.ENGLISH, BMI_RESULTS_FORMAT, result));
         int backgroundId = new BmiBackgroundWrapper(result).getBackgroundDependingOnBmi();
         layout.setBackground(ContextCompat.getDrawable(this, backgroundId));
     }
