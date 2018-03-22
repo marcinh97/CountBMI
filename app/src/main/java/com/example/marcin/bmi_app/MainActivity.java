@@ -96,7 +96,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    /*
+    public static void start(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        starter.putExtra();
+        context.startActivity(starter);
+    }
+*/
     private void setInputWhenSwitchPressed(String massMessage, String heightMessage){
         massInput.setText("");
         heightInput.setText("");
@@ -210,7 +216,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+    /*
+    public static void start(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        starter.putExtra();
+        context.startActivity(starter);
+    }
+*/
     private void showErrors(IllegalArgumentException e){
         String errorMessage;
         if (e.getClass().equals(Bmi.WrongMassException.class)){
