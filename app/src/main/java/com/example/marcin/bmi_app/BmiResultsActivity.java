@@ -56,6 +56,4 @@ public class BmiResultsActivity extends AppCompatActivity {
         int backgroundId = new BmiBackgroundWrapper(result).getBackgroundDependingOnBmi();
         layout.setBackground(ContextCompat.getDrawable(this, backgroundId));
     }
-    
-
 }
