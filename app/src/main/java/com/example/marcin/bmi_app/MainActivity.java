@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String MASS_HINT = "massHint";
     public static final String HEIGHT_HINT = "heightHint";
     public static final String SWITCH_STATUS = "switchStatus";
-    public static final String MASS_INPUT_FORMAT = "%.0f";
 
     private Switch unitChanger; // isChecked() = lbs
     private EditText massInput;
@@ -284,14 +283,15 @@ public class MainActivity extends AppCompatActivity {
 
         LayoutInflater layoutInflater; // new layout inside window
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") ViewGroup container = (ViewGroup) (layoutInflater != null ? layoutInflater.inflate(R.layout.author_info, null) : null);
+        @SuppressLint("InflateParams") ViewGroup container = (ViewGroup) (layoutInflater != null ?
+                layoutInflater.inflate(R.layout.author_info, null) : null);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         authorImagePopup = new PopupWindow(container, (int)(POPUP_WINDOW_RATIO *displayMetrics.widthPixels),
                 (int)(POPUP_WINDOW_RATIO *displayMetrics.heightPixels), true);
-        authorImagePopup.setElevation(SHADOW_BEHIND_POPUP_LEVEL); // shadow behind popup
+        authorImagePopup.setElevation(SHADOW_BEHIND_POPUP_LEVEL);
 
         showAuthorImagePopupOnScreen(constraintLayout, bottomPositionOfImageCenter);
 
