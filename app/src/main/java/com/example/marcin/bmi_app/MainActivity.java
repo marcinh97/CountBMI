@@ -43,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText massInput;
     private EditText heightInput;
     private Button countBmiButton;
-    private ImageView saveIcon;
+    private ImageView saveValuesIcon;
+    private ImageView deleteValuesIcon;
 
     private SharedPreferences sharedPreferences;
 
     private boolean isPopupShown = false;
     public static final String IS_POPUP_SHOWN = "isPopupShown";
+
+    private PopupWindow authorImagePopup;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -56,13 +59,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
-        //sharedPreferences = getPreferences(MODE_PRIVATE);
-//        sharedPreferences.edit().clear().apply();
 
         initViews();
         initListeners();
 
-        retrieveMassHeight();
+        retrieveSavedMassHeight();
     }
 
     private void initViews(){
@@ -70,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
         massInput = findViewById(R.id.mass_edit_text);
         heightInput = findViewById(R.id.height_edit_text);
         countBmiButton = findViewById(R.id.count_bmi_button);
-        saveIcon = findViewById(R.id.save_icon);
+        saveValuesIcon = findViewById(R.id.save_icon);
+        deleteValuesIcon = findViewById(R.id.delete_saved_values_button);
     }
 
     private void initListeners(){
@@ -95,12 +97,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        saveIcon.setOnClickListener(new View.OnClickListener() {
+        saveValuesIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveMassHeight();
+                saveMassHeightToRetrieveLater();
             }
         });
+
+        deleteValuesIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteSavedValues();
+                makeLongToastWithMessage(getText(R.string.saved_values_deleted).toString());
+            }
+        });
+    }
+
+    private void deleteSavedValues() {
+        sharedPreferences.edit().clear().apply();
     }
 
     private boolean showAdditionalInfoForSwitch(){
@@ -147,19 +161,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveMassHeight(){
+    private void saveMassHeightToRetrieveLater(){
         String[] values = new String[2];
         boolean hasErrors = false;
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
             values = getInitialMassHeightInput();
-        }
-        catch (Bmi.NoArgumentsException e){
-            hasErrors = true;
-            makeLongToastWithMessage(getText(R.string.saved_values_deleted).toString());
-            editor.clear();
-            editor.apply();
         }
         catch (IllegalArgumentException e) {
             hasErrors = true;
@@ -176,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void retrieveMassHeight(){
+    private void retrieveSavedMassHeight(){
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         String mass, height;
         boolean bothValuesRetrievable = sharedPreferences.contains(MASS_KEY) && sharedPreferences.contains(HEIGHT_KEY);
@@ -197,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private double[] parseMassHeight() throws IllegalArgumentException{
         String[] valuesToParse = getInitialMassHeightInput();
         double mass = Double.parseDouble(valuesToParse[0]);
@@ -213,8 +220,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return new String[]{massToParse, heightToParse};
     }
-
-
 
     /*
     public static void start(Context context) {
@@ -272,13 +277,14 @@ public class MainActivity extends AppCompatActivity {
     private void showAuthorImagePopup(){
         final double POPUP_WINDOW_RATIO = 0.7;
         final float SHADOW_BEHIND_POPUP_LEVEL = 10;
+        final ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
+        int orientation = getResources().getConfiguration().orientation;
+        final int bottomPositionOfImageCenter = orientation == Configuration.ORIENTATION_LANDSCAPE ?
+                (int)(getResources().getDimension(R.dimen.bottom_position_of_image_center)) : 0;
 
-        final PopupWindow authorImagePopup;
         LayoutInflater layoutInflater; // new layout inside window
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") ViewGroup container = (ViewGroup) (layoutInflater != null ? layoutInflater.inflate(R.layout.author_info, null) : null);
-
-        int orientation = getResources().getConfiguration().orientation;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -287,15 +293,17 @@ public class MainActivity extends AppCompatActivity {
                 (int)(POPUP_WINDOW_RATIO *displayMetrics.heightPixels), true);
         authorImagePopup.setElevation(SHADOW_BEHIND_POPUP_LEVEL); // shadow behind popup
 
-        final ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
+        showAuthorImagePopupOnScreen(constraintLayout, bottomPositionOfImageCenter);
 
-        final int bottomPositionOfImageCenter = orientation == Configuration.ORIENTATION_LANDSCAPE ?
-                (int)(getResources().getDimension(R.dimen.bottom_position_of_image_center)) : 0;
+        allowUserToDismissPopupByClicking(container);
+    }
 
-        authorImagePopup.showAtLocation(constraintLayout, Gravity.CENTER, 0, bottomPositionOfImageCenter);
-
+    private void showAuthorImagePopupOnScreen(ConstraintLayout layout, int positionOfImage){
+        authorImagePopup.showAtLocation(layout, Gravity.CENTER, 0, positionOfImage);
         isPopupShown = true;
+    }
 
+    private void allowUserToDismissPopupByClicking(ViewGroup container){
         assert container != null;
         container.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
@@ -326,5 +334,4 @@ public class MainActivity extends AppCompatActivity {
         massInput.setHint(massHint);
         heightInput.setHint(heightHint);
     }
-
 }
