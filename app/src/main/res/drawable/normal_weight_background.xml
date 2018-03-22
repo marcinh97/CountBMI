@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/seigaiha_repeating"
+        />
+    <item
+        android:drawable="@drawable/background_green"
+        />
+</layer-list>
