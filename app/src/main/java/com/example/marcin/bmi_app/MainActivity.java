@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean showAdditionalInfoForSwitch(){
-        Toast.makeText(getApplicationContext(), getText(R.string.switch_description_long), Toast.LENGTH_LONG).show();
+        makeLongToastWithMessage(getText(R.string.switch_description_long).toString());
         return true;
     }
 
