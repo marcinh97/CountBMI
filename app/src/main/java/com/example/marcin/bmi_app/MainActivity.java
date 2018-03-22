@@ -58,11 +58,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         initViews();
-
         initListeners();
 
         retrieveMassHeightIfAvailableAndDisplayInTextViews();
-
     }
 
     private void initViews(){
@@ -77,19 +75,14 @@ public class MainActivity extends AppCompatActivity {
         unitChanger.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast.makeText(getApplicationContext(), getText(R.string.switch_description_long), Toast.LENGTH_LONG).show();
-                return true;
+                return showAdditionalInfoForSwitch();
             }
         });
 
         unitChanger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (unitChanger.isChecked()) {
-                    setInputWhenSwitchPressed(getString(R.string.pounds), getString(R.string.inches));
-                } else {
-                    setInputWhenSwitchPressed(getString(R.string.kilograms), getString(R.string.meters));
-                }
+                setInputWhenSwitchPressed(unitChanger.isChecked());
             }
         });
 
@@ -107,20 +100,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    /*
-    public static void start(Context context) {
-        Intent starter = new Intent(context, MainActivity.class);
-        starter.putExtra();
-        context.startActivity(starter);
+
+    private boolean showAdditionalInfoForSwitch(){
+        Toast.makeText(getApplicationContext(), getText(R.string.switch_description_long), Toast.LENGTH_LONG).show();
+        return true;
     }
-*/
-    private void setInputWhenSwitchPressed(String massMessage, String heightMessage){
+
+    private void setInputWhenSwitchPressed(boolean isChecked){
         massInput.setText("");
         heightInput.setText("");
+        String massMessage = isChecked ? getString(R.string.pounds) : getString(R.string.kilograms);
+        String heightMessage = isChecked ? getString(R.string.inches) : getString(R.string.meters);
         massInput.setHint(massMessage);
         heightInput.setHint(heightMessage);
-        countBmiButton = findViewById(R.id.count_bmi_button);
+    }
 
+    private void countBmi() {
+        double[] massAndHeight = new double[2];
+        boolean hasErrors = false;
+        try {
+            massAndHeight = parseMassHeight();
+        } catch (IllegalArgumentException e) {
+            showErrors(e);
+            hasErrors = true;
+        }
+        if (!hasErrors){
+            double mass = massAndHeight[0];
+            double height = massAndHeight[1];
+            double result = 0;
+            hasErrors = false;
+            Bmi bmiCounter = unitChanger.isChecked() ? new BmiPoundsFeet(mass, height) : new BmiKgMeters(mass, height);
+            try {
+                result = bmiCounter.countBmi();
+            } catch (IllegalArgumentException e) {
+                showErrors(e);
+                hasErrors = true;
+            } finally {
+                if (!hasErrors) {
+                    Intent intent = new Intent(this, BmiResultsActivity.class);
+                    intent.putExtra(BMI_RESULT, result);
+                    startActivity(intent);
+                }
+            }
+        }
     }
 
     private void saveMassHeightToRetrieveLater() {
@@ -200,35 +222,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void countBmi() {
-        double[] massAndHeight = new double[2];
-        boolean hasErrors = false;
-        try {
-            massAndHeight = parseMassHeight();
-        } catch (IllegalArgumentException e) {
-            showErrors(e);
-            hasErrors = true;
-        }
-        if (!hasErrors){
-            double mass = massAndHeight[0];
-            double height = massAndHeight[1];
-            double result = 0;
-            hasErrors = false;
-            Bmi bmiCounter = unitChanger.isChecked() ? new BmiPoundsFeet(mass, height) : new BmiKgMeters(mass, height);
-            try {
-                result = bmiCounter.countBmi();
-            } catch (IllegalArgumentException e) {
-                showErrors(e);
-                hasErrors = true;
-            } finally {
-                if (!hasErrors) {
-                    Intent intent = new Intent(this, BmiResultsActivity.class);
-                    intent.putExtra(BMI_RESULT, result);
-                    startActivity(intent);
-                }
-            }
-        }
-    }
+
     /*
     public static void start(Context context) {
         Intent starter = new Intent(context, MainActivity.class);
