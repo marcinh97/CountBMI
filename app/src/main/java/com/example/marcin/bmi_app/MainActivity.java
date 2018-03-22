@@ -56,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
+        //sharedPreferences = getPreferences(MODE_PRIVATE);
+//        sharedPreferences.edit().clear().apply();
 
         initViews();
         initListeners();
 
-        retrieveMassHeightIfAvailableAndDisplayInTextViews();
+        retrieveMassHeight();
     }
 
     private void initViews(){
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         saveIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveMassHeightToRetrieveLater();
+                saveMassHeight();
             }
         });
     }
@@ -145,65 +147,56 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveMassHeightToRetrieveLater() {
-        double[] values = new double[2];
+    private void saveMassHeight(){
+        String[] values = new String[2];
         boolean hasErrors = false;
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            values = parseMassHeight();
-        } catch (Bmi.NoArgumentsException e){
+            values = getInitialMassHeightInput();
+        }
+        catch (Bmi.NoArgumentsException e){
             hasErrors = true;
             makeLongToastWithMessage(getText(R.string.saved_values_deleted).toString());
             editor.clear();
             editor.apply();
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             hasErrors = true;
             showErrors(e);
         }
-        if (!hasErrors) {
-            double mass = values[0];
-            double height = values[1];
-
-            editor.putLong(MASS_KEY, Double.doubleToRawLongBits(mass));
-            editor.putLong(HEIGHT_KEY, Double.doubleToRawLongBits(height));
-
+        if (!hasErrors){
+            String mass = values[0];
+            String height = values[1];
+            editor.putString(MASS_KEY, mass);
+            editor.putString(HEIGHT_KEY, height);
             editor.putBoolean(SWITCH_STATUS, unitChanger.isChecked());
             makeLongToastWithMessage(getText(R.string.successful_save_message).toString());
             editor.apply();
         }
     }
 
-    @SuppressLint({"DefaultLocale", "SetTextI18n"})
-    private void retrieveMassHeightIfAvailableAndDisplayInTextViews(){
+    private void retrieveMassHeight(){
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        double mass, height;
+        String mass, height;
         boolean bothValuesRetrievable = sharedPreferences.contains(MASS_KEY) && sharedPreferences.contains(HEIGHT_KEY);
         boolean switchStatus;
 
-        if (bothValuesRetrievable){
-            mass = Double.longBitsToDouble(sharedPreferences.getLong(MASS_KEY, 0));
-            height = Double.longBitsToDouble(sharedPreferences.getLong(HEIGHT_KEY, 0));
+        if(bothValuesRetrievable){
+            mass = sharedPreferences.getString(MASS_KEY, "").replace(',','.');
+            height = sharedPreferences.getString(HEIGHT_KEY, "").replace(',','.');
             switchStatus = sharedPreferences.getBoolean(SWITCH_STATUS, false);
 
-            String massString = Double.toString(mass);
-            String heightString = Double.toString(height);
-
-            mass = Double.parseDouble(massString.replace(',','.'));
-            height = Double.parseDouble(heightString.replace(',','.'));
-
-            massInput.setText(String.format(MASS_INPUT_FORMAT, mass));
-            // massInput.setText(Double.toString(mass));
-            heightInput.setText(Double.toString(height));
+            massInput.setText(mass);
+            heightInput.setText(height);
             unitChanger.setChecked(switchStatus);
-
             if (switchStatus){ // on = lbs
                 massInput.setHint(getText(R.string.pounds).toString());
                 heightInput.setHint(getText(R.string.inches).toString());
             }
         }
-
     }
+
 
     private double[] parseMassHeight() throws IllegalArgumentException{
         String[] valuesToParse = getInitialMassHeightInput();
