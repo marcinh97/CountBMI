@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private Switch unitChanger; // isChecked() = lbs
     private EditText massInput;
     private EditText heightInput;
+    private Button countBmiButton;
+    private ImageView saveIcon;
+
     private SharedPreferences sharedPreferences;
 
     private boolean isPopupShown = false;
@@ -54,7 +57,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
 
+        initViews();
+
+        initListeners();
+
+        retrieveMassHeightIfAvailableAndDisplayInTextViews();
+
+    }
+
+    private void initViews(){
         unitChanger = findViewById(R.id.change_units_switch);
+        massInput = findViewById(R.id.mass_edit_text);
+        heightInput = findViewById(R.id.height_edit_text);
+        countBmiButton = findViewById(R.id.count_bmi_button);
+        saveIcon = findViewById(R.id.save_icon);
+    }
+
+    private void initListeners(){
         unitChanger.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -63,13 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        massInput = findViewById(R.id.mass_edit_text);
-        heightInput = findViewById(R.id.height_edit_text);
-
-        retrieveMassHeightIfAvailableAndDisplayInTextViews();
-
         unitChanger.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 if (unitChanger.isChecked()) {
@@ -80,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button countBmiButton = findViewById(R.id.count_bmi_button);
         countBmiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView saveIcon = findViewById(R.id.save_icon);
         saveIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
         heightInput.setText("");
         massInput.setHint(massMessage);
         heightInput.setHint(heightMessage);
+        countBmiButton = findViewById(R.id.count_bmi_button);
+
     }
 
     private void saveMassHeightToRetrieveLater() {
