@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:theme="@style/CustomToolbarStyle"
-    app:popupTheme="@style/PopupThemeStyle"
-    android:background="@color/toolbarColor"
-    >
+    app:popupTheme="@style/PopupThemeStyle">
+    <!--android:background="@color/toolbarColor"-->
+
 
 
     <RelativeLayout
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:background="@color/toolbarColor"
+            android:background="@null"
             app:srcCompat="?attr/actionModeCloseDrawable"
             android:contentDescription="@string/back_button_content_description" />
 
