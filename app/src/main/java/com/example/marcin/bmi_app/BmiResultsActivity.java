@@ -21,6 +21,7 @@ public class BmiResultsActivity extends AppCompatActivity {
     private ImageButton backToPreviousActivity;
     private ConstraintLayout layout;
     private double result;
+    private static final String BMI_RESULT = "bmiResult";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class BmiResultsActivity extends AppCompatActivity {
         result = 0;
 
         Intent intent = getIntent();
-        result = intent.getDoubleExtra(MainActivity.BMI_RESULT, result);
+        result = intent.getDoubleExtra(BMI_RESULT, result);
 
         initViews();
         initListeners();
@@ -55,5 +56,11 @@ public class BmiResultsActivity extends AppCompatActivity {
         bmiResults.setText(String.format(Locale.ENGLISH, BMI_RESULTS_FORMAT, result));
         int backgroundId = new BmiBackgroundWrapper(result).getBackgroundDependingOnBmi();
         layout.setBackground(ContextCompat.getDrawable(this, backgroundId));
+    }
+
+    public static void start(Context context, double bmiResult) {
+        Intent starter = new Intent(context, BmiResultsActivity.class);
+        starter.putExtra(BMI_RESULT, bmiResult);
+        context.startActivity(starter);
     }
 }

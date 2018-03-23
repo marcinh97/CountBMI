@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String MASS_KEY = "mass";
     public static final String HEIGHT_KEY = "height";
-    public static final String BMI_RESULT = "bmiResult";
     public static final String MASS_HINT = "massHint";
     public static final String HEIGHT_HINT = "heightHint";
     public static final String SWITCH_STATUS = "switchStatus";
@@ -152,9 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 hasErrors = true;
             } finally {
                 if (!hasErrors) {
-                    Intent intent = new Intent(this, BmiResultsActivity.class);
-                    intent.putExtra(BMI_RESULT, result);
-                    startActivity(intent);
+                    BmiResultsActivity.start(this, result);
                 }
             }
         }
@@ -220,13 +217,6 @@ public class MainActivity extends AppCompatActivity {
         return new String[]{massToParse, heightToParse};
     }
 
-    /*
-    public static void start(Context context) {
-        Intent starter = new Intent(context, MainActivity.class);
-        starter.putExtra();
-        context.startActivity(starter);
-    }
-*/
     private void showErrors(IllegalArgumentException e){
         String errorMessage;
         if (e.getClass().equals(Bmi.WrongMassException.class)){
