@@ -2,7 +2,6 @@ package com.example.marcin.bmi_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.constraint.ConstraintLayout;
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MASS_HINT = "massHint";
     public static final String HEIGHT_HINT = "heightHint";
     public static final String SWITCH_STATUS = "switchStatus";
+    public static final String IS_POPUP_SHOWN = "isPopupShown";
 
     private Switch unitChanger; // isChecked() = lbs
     private EditText massInput;
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     private boolean isPopupShown = false;
-    public static final String IS_POPUP_SHOWN = "isPopupShown";
 
     private PopupWindow authorImagePopup;
 
@@ -194,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             massInput.setText(mass);
             heightInput.setText(height);
             unitChanger.setChecked(switchStatus);
-            if (switchStatus){ // on = lbs
+            if (switchStatus){
                 massInput.setHint(getText(R.string.pounds).toString());
                 heightInput.setHint(getText(R.string.inches).toString());
             }
@@ -271,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
         final int bottomPositionOfImageCenter = orientation == Configuration.ORIENTATION_LANDSCAPE ?
                 (int)(getResources().getDimension(R.dimen.bottom_position_of_image_center)) : 0;
 
-        LayoutInflater layoutInflater; // new layout inside window
+        LayoutInflater layoutInflater;
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") ViewGroup container = (ViewGroup) (layoutInflater != null ?
                 layoutInflater.inflate(R.layout.author_info, null) : null);

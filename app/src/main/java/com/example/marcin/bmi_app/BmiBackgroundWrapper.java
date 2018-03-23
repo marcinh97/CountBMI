@@ -1,10 +1,6 @@
 package com.example.marcin.bmi_app;
 
-/**
- * Created by marcin on 22.03.2018.
- */
-
-public class BmiBackgroundWrapper {
+class BmiBackgroundWrapper {
     private double bmiLevel;
     private static final double UNDERWEIGHT_UPPER_BMI = 18.5;
     private static final double NORMAL_UPPER_BMI = 25;
@@ -14,7 +10,7 @@ public class BmiBackgroundWrapper {
         this.bmiLevel = bmiLevel;
     }
 
-    public int getBackgroundDependingOnBmi(){
+    int getBackgroundDependingOnBmi(){
         if (bmiLevel < UNDERWEIGHT_UPPER_BMI){
             return R.drawable.underweight_background;
         }
@@ -26,6 +22,4 @@ public class BmiBackgroundWrapper {
         }
         return R.drawable.obesity_background;
     }
-
-
 }
