@@ -112,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void deleteSavedValues() {
         sharedPreferences.edit().clear().apply();
+        deleteValuesInTextViews();
+    }
+
+    private void deleteValuesInTextViews(){
+        massInput.setText("");
+        heightInput.setText("");
     }
 
     private boolean showAdditionalInfoForSwitch(){
@@ -120,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setInputWhenSwitchPressed(boolean isChecked){
-        massInput.setText("");
-        heightInput.setText("");
+        deleteValuesInTextViews();
         String massMessage = isChecked ? getString(R.string.pounds) : getString(R.string.kilograms);
         String heightMessage = isChecked ? getString(R.string.inches) : getString(R.string.meters);
         massInput.setHint(massMessage);
