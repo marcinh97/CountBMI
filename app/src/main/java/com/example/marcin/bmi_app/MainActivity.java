@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         heightInput.setHint(heightMessage);
     }
 
-    private void countBmi() {
+    public void countBmi() {
         double[] massAndHeight = new double[2];
         boolean hasErrors = false;
         try {
